@@ -117,6 +117,7 @@ export async function deletarLivro(req: Request, res: Response) {
             return res.status(400).json({mensagem: "O livro esta com emprestimo ativo"})
         }
 
+        await prisma.emprestimo.deleteMany({ where: { livro_id: id } })
         await prisma.livro.delete({where: {id}})
         return res.status(200).json({mensagem: "Livro deletado"})
     } catch (erro) {
